@@ -3,8 +3,8 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite"
-         "prettier:format": "prettier --write"
+        "dev": "vite",
+        "prettier:format": "prettier --write."
     },
     "devDependencies": {
         "@inertiajs/vue3": "^1.0.14",
