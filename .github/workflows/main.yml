@@ -42,9 +42,9 @@ jobs:
     - name: Generate Laravel key
       run: php artisan key:generate
 
-    # Ejecutar las migraciones (si es necesario)
-    - name: Run migrations
-      run: php artisan migrate --env=testing
+    # # Ejecutar las migraciones (si es necesario)
+    # - name: Run migrations
+    #   run: php artisan migrate --env=testing
 
     # Instalar Node.js 20
     - name: Set up Node.js 20
