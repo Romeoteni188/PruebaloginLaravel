@@ -57,9 +57,9 @@ jobs:
       run: |
         npm install
 
-    # Ejecutar las pruebas de PHPUnit
-    - name: Run PHPUnit tests
-      run: vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+    # Ejecutar las pruebas de test
+    - name: Run Pest tests
+      run: ./vendor/bin/pest --coverage-text --coverage-clover=coverage.clover
 
   
 
