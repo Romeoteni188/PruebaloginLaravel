@@ -1,4 +1,3 @@
-
 name: Laravel CI
 
 on:
@@ -12,6 +11,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20]
 
     steps:
     # Checkout el código desde GitHub
@@ -22,7 +24,7 @@ jobs:
     - name: Set up PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.1'  # Puedes cambiar a la versión que usas en tu proyecto
+        php-version: '8.2.24'  # Puedes cambiar a la versión que usas en tu proyecto
         extensions: mbstring, bcmath, xml, curl
         coverage: xdebug
 
@@ -31,7 +33,7 @@ jobs:
       run: |
         curl -sS https://getcomposer.org/installer | php
         php composer.phar install --no-interaction
-
+    
     # Copiar el archivo .env para las pruebas
     - name: Copy .env file
       run: cp .env.example .env
@@ -43,6 +45,17 @@ jobs:
     # Ejecutar las migraciones (si es necesario)
     - name: Run migrations
       run: php artisan migrate --env=testing
+
+    # Instalar Node.js 20
+    - name: Set up Node.js 20
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+
+    # Instalar dependencias de Node.js
+    - name: Install Node.js dependencies
+      run: |
+        npm install
 
     # Ejecutar las pruebas de PHPUnit
     - name: Run PHPUnit tests
