@@ -1,0 +1,27 @@
+name: code-format-checks
+on:
+    pull_request:
+        branches:
+            - main
+        types:
+            - opened
+            - synchronize
+jobs:
+    formatting-checks:
+        runs-on: ubuntu-latest
+        container:
+            image: finanssoreal/php-laravel-formatter:latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Check PHP code formatting
+              run: php-cs-fixer fix -vvv --dry-run
+
+            - name: Check Blade file formatting
+              if: always()
+              run: blade-formatter "resources/**/*.blade.php" -c
+
+            - name: Check JS file formatting
+              if: always()
+              run: prettier . --check
