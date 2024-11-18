@@ -1,15 +1,6 @@
-# Usa la imagen oficial de Node.js versión 20 o que sea LTS
-# FROM node:lts
-FROM node:20
-
-# Actualiza npm a la última versión
-RUN npm install -g npm@latest
-
+# Usa la imagen oficial de Node.js versión LTS con Alpine
+#FROM node:lts-alpine@sha256:78f43502957cd006d6d83a0a93a23ffb45dbcddb9e0836767b02d866dd52b21d
+FROM node:lts-alpine
 # Instala prettier globalmente
 RUN npm install -g prettier
-
-# Verifica la instalación de Node.js y prettier
-RUN node -v && prettier -v
-
-# Establece un comando por defecto o deja el contenedor listo para personalizar
-CMD ["node"]
+# es una pruba aver si funciona
