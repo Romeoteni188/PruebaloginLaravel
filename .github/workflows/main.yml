@@ -6,12 +6,11 @@ on:
     types:
       - opened
       - synchronize
-
 jobs:
   formatting-checks:
     runs-on: ubuntu-latest
     container:
-      image: romeo188/node_prettier:latest
+      image: romeo188/node-lts-prettier
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
