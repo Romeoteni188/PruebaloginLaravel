@@ -1,65 +1,20 @@
-name: Laravel CI
-
+name: codigo-formateado
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
+    types:
+      - opened
+      - synchronize
 
 jobs:
-  build:
+  formatting-checks:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [20]
-
+    container:
+      image: romeo188/node_prettier:latest
     steps:
-    # Checkout el código desde GitHub
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    # Configura PHP
-    - name: Set up PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.2.24'  # Puedes cambiar a la versión que usas en tu proyecto
-        extensions: mbstring, bcmath, xml, curl
-        coverage: xdebug
-
-    # Instalar dependencias de Composer
-    - name: Install Composer dependencies
-      run: |
-        curl -sS https://getcomposer.org/installer | php
-        php composer.phar install --no-interaction
-    
-    # Copiar el archivo .env para las pruebas
-    - name: Copy .env file
-      run: cp .env.example .env
-
-    # Generar la clave de la aplicación Laravel
-    - name: Generate Laravel key
-      run: php artisan key:generate
-
-    # # Ejecutar las migraciones (si es necesario)
-    # - name: Run migrations
-    #   run: php artisan migrate --env=testing
-
-    # Instalar Node.js 20
-    - name: Set up Node.js 20
-      uses: actions/setup-node@v3
-      with:
-        node-version: '20'
-
-    # Instalar dependencias de Node.js
-    - name: Install Node.js dependencies
-      run: |
-        npm install
-
-    # Ejecutar las pruebas de test
-    - name: Run Pest tests
-      run: ./vendor/bin/pest --coverage-text --coverage-clover=coverage.clover
-
-  
-
+      - name: Check JS file formatting
+        run: prettier . --check
